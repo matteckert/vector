@@ -65,7 +65,7 @@ bool vector_remove(vector v, size_t i, void *elem) {
     if (!v || i >= v->llen) return false;
     if (elem) memcpy(elem, ELEM(i), v->size);
     else if (v->free) v->free(*(void **)(ELEM(i)));
-    memmove(ELEM(i), ELEM(i+1), (v->llen-- - i + 1 * v->size));
+    memmove(ELEM(i), ELEM(i+1), (v->llen-- - i + v->size));
     return true;
 }
 
@@ -79,7 +79,7 @@ bool vector_add(vector v, void *elem) {
 bool vector_insert(vector v, size_t i, void *elem) {
     if (!v || i >= v->llen) return false;
     if (brim(v) && !grow(v)) return false;
-    memmove(ELEM(i+1), ELEM(i), (v->llen++ - i + 1 * v->size));
+    memmove(ELEM(i+1), ELEM(i), (v->llen++ - i + v->size));
     memcpy(ELEM(i), elem, v->size);
     return true;
 }
